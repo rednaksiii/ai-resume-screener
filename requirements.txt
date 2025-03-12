@@ -1,0 +1,1 @@
+pip install fastapi uvicorn pdfplumber python-docx scikit-learn xgboost numpy streamlit
