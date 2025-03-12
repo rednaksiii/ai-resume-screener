@@ -17,15 +17,15 @@ with open("resume_model.pkl", "wb") as file:
 print("Model trained and saved!")
 
 def predict_suitability(experience, match_score):
+    """Predict if a candidate is suitable."""
+    if match_score < 30:  # New rejection threshold
+        return "Not Suitable"
+    
     with open("resume_model.pkl", "rb") as file:
         loaded_model = pickle.load(file)
     
-    prediction = loaded_model.predict(np.array([[experience, match_score]]))
-
-    # ✅ Apply a more reasonable threshold
-    if match_score < 50:  
-        return "Not Suitable"  
-    return "Suitable"
+    prediction = loaded_model.predict([[experience, match_score]])
+    return "Suitable" if prediction[0] else "Not Suitable"
 
 if __name__ == "__main__":
     print(predict_suitability(4, 85))
