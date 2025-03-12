@@ -1,1 +1,16 @@
-pip install fastapi uvicorn pdfplumber python-docx scikit-learn xgboost numpy streamlit
+fastapi
+uvicorn
+pdfplumber
+python-docx
+scikit-learn
+xgboost
+numpy
+streamlit
+spacy
+transformers
+sentence-transformers
+torch
+torchvision
+torchaudio
+pandas
+joblib

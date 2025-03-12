@@ -76,7 +76,6 @@ pip install -r requirements.txt
 ### **4️⃣ Download spaCy & BERT Models**
 ```bash
 python -m spacy download en_core_web_sm
-pip install sentence-transformers
 ```
 
 ### **5️⃣ Run FastAPI Server**
@@ -105,7 +104,39 @@ Go to **[http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs)** to test the A
 
 ---
 
+## **📦 Dependencies (`requirements.txt`)**
+This project requires the following packages:
+```
+fastapi
+uvicorn
+pdfplumber
+python-docx
+scikit-learn
+xgboost
+numpy
+streamlit
+spacy
+transformers
+sentence-transformers
+torch
+torchvision
+torchaudio
+pandas
+joblib
+```
+To install them, run:
+```bash
+pip install -r requirements.txt
+```
+Then download the **spaCy model**:
+```bash
+python -m spacy download en_core_web_sm
+```
+
+---
+
 ## **🔮 Next Steps**
 🔲 **Fix Swagger UI Debugging Issue**  
 🔲 **Optimize BERT Model with More Data**  
 🔲 **Deploy API Online (Railway, Render, or AWS)**  
+🔲 **Sorting Resumes by Score** 
