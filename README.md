@@ -136,7 +136,7 @@ python -m spacy download en_core_web_sm
 ---
 
 ## **🔮 Next Steps**
-🔲 **Fix Swagger UI Debugging Issue**  
+🔲 **Create UX/UI**  
 🔲 **Optimize BERT Model with More Data**  
 🔲 **Deploy API Online (Railway, Render, or AWS)**  
 🔲 **Sorting Resumes by Score** 
