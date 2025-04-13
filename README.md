@@ -135,6 +135,38 @@ python -m spacy download en_core_web_sm
 
 ---
 
+## 📊 **Response Explanation**
+
+When a resume is uploaded, the API returns a JSON object like this:
+
+```json
+{
+  "match_score": 44.63,
+  "skill_match_score": 50,
+  "matched_skills": ["Python", "Machine Learning"],
+  "prediction": "Suitable",
+  "bert_classification": {
+    "label": "Relevant",
+    "score": 0.569
+  },
+  "file_saved_at": "uploads/SophiaMartinezDataScienceResume.pdf"
+}
+```
+
+### 🔍 What Each Field Means:
+
+| Field | Description |
+|-------|-------------|
+| `match_score` | **Textual similarity** between the resume and job description, calculated using **TF-IDF + cosine similarity** (scale: 0–100). |
+| `skill_match_score` | The **percentage of required job skills** that were found in the resume. |
+| `matched_skills` | A list of actual **skills detected** in the resume that overlap with the job description. |
+| `prediction` | Output from the **XGBoost ML model** that predicts whether the candidate is **“Suitable” or “Not Suitable”** based on features like match score and (placeholder) experience. |
+| `bert_classification.label` | Classification result from a **BERT-based model**, determining whether the resume text is **“Relevant” or “Not Relevant”** to the job context. |
+| `bert_classification.score` | The **confidence score** (from 0 to 1) of the BERT model’s classification. |
+| `file_saved_at` | The full **path to the saved resume** in the local `uploads/` folder, useful for reviewing or referencing later. |
+
+---
+
 ## **🔮 Next Steps**
 🔲 **Fix Swagger UI Debugging Issue**  
 🔲 **Optimize BERT Model with More Data**  

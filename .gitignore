@@ -1,0 +1,19 @@
+# Ignore Python bytecode and cache
+__pycache__/
+*.py[cod]
+*.pkl
+
+# Ignore virtual environments
+venv/
+.env/
+.vscode/
+nlp-env/
+
+# Ignore OS-specific files
+.DS_Store
+
+# Ignore resume uploads
+uploads/
+
+# Ignore Jupyter checkpoints
+.ipynb_checkpoints/
