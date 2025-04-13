@@ -168,7 +168,7 @@ When a resume is uploaded, the API returns a JSON object like this:
 ---
 
 ## **🔮 Next Steps**
-🔲 **Fix Swagger UI Debugging Issue**  
+🔲 **Create UX/UI**  
 🔲 **Optimize BERT Model with More Data**  
 🔲 **Deploy API Online (Railway, Render, or AWS)**  
 🔲 **Sorting Resumes by Score** 
