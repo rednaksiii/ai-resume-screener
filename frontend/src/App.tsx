@@ -1,12 +1,13 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import ResumeUploader from './components/ResumeUploader';
-import ResultsDisplay from './components/ResultsDisplay';
-import LoadingScreen from './components/LoadingScreen';
+import ResumeUploader from './components/ResumeUploader.tsx';
+import ResultsDisplay from './components/ResultsDisplay.tsx';
+import LoadingScreen from './components/LoadingScreen.tsx';
 
 function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [results, setResults] = useState(null);
+  const [jobDescription, setJobDescription] = useState('');
   
   const handleUploadComplete = (data: any) => {
     setIsLoading(false);
@@ -50,7 +51,13 @@ function App() {
             ) : results ? (
               <ResultsDisplay key="results" results={results} onReset={handleReset} />
             ) : (
-              <ResumeUploader key="uploader" onUploadStart={() => setIsLoading(true)} onUploadComplete={handleUploadComplete} />
+              <ResumeUploader 
+                key="uploader" 
+                onUploadStart={() => setIsLoading(true)} 
+                onUploadComplete={handleUploadComplete}
+                jobDescription={jobDescription}
+                setJobDescription={setJobDescription}
+              />
             )}
           </AnimatePresence>
         </main>

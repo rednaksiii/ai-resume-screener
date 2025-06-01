@@ -6,6 +6,8 @@ import { ENDPOINTS, API_URL } from '../config';
 interface ResumeUploaderProps {
   onUploadStart: () => void;
   onUploadComplete: (results: any) => void;
+  jobDescription: string;
+  setJobDescription: (description: string) => void;
 }
 
 interface FilePreview {
@@ -19,7 +21,7 @@ interface UploadProgress {
   percent: number;
 }
 
-const ResumeUploader = ({ onUploadStart, onUploadComplete }: ResumeUploaderProps) => {
+const ResumeUploader = ({ onUploadStart, onUploadComplete, jobDescription, setJobDescription }: ResumeUploaderProps) => {
   const [error, setError] = useState<string | null>(null);
   const [isDragging, setIsDragging] = useState(false);
   const [filePreview, setFilePreview] = useState<FilePreview | null>(null);
@@ -70,7 +72,8 @@ const ResumeUploader = ({ onUploadStart, onUploadComplete }: ResumeUploaderProps
       const data = await response.json();
       console.log('✅ Backend connection successful:', data);
       setUploadProgress({ status: 'success', percent: 100 });
-      setError('Backend connection successful! You can now upload a resume.');
+      // Don't set any error message on success
+      setError(null);
       return true;
     } catch (err: any) {
       console.error('❌ Backend connection failed:', err);
@@ -119,101 +122,7 @@ const ResumeUploader = ({ onUploadStart, onUploadComplete }: ResumeUploaderProps
       size: file.size,
       type: file.type
     });
-    
-    // Create form data
-    const formData = new FormData();
-    formData.append('file', file);
-    
-    try {
-      // Notify parent component that upload has started
-      onUploadStart();
-      
-      // Set upload in progress
-      setUploadProgress({ status: 'uploading', percent: 0 });
-      
-      // Log upload start with detailed information
-      console.log('🚀 Starting resume upload');
-      console.log('File name:', file.name);
-      console.log('File size:', file.size, 'bytes');
-      console.log('File type:', file.type);
-      console.log('Upload endpoint:', ENDPOINTS.UPLOAD_RESUME);
-      
-      // Use fetch for upload instead of axios
-      const xhr = new XMLHttpRequest();
-      
-      // Setup progress tracking
-      xhr.upload.onprogress = (event) => {
-        if (event.lengthComputable) {
-          const percentCompleted = Math.round((event.loaded * 100) / event.total);
-          console.log(`Upload progress: ${percentCompleted}%`);
-          setUploadProgress({ status: 'uploading', percent: percentCompleted });
-        }
-      };
-      
-      // Create a promise to handle the XHR request
-      const uploadPromise = new Promise((resolve, reject) => {
-        xhr.onload = function() {
-          if (xhr.status >= 200 && xhr.status < 300) {
-            try {
-              const data = JSON.parse(xhr.responseText);
-              resolve(data);
-            } catch (e) {
-              reject(new Error('Invalid JSON response from server'));
-            }
-          } else {
-            reject(new Error(`Server responded with status code ${xhr.status}`));
-          }
-        };
-        
-        xhr.onerror = function() {
-          reject(new Error('Network error occurred during upload'));
-        };
-        
-        xhr.ontimeout = function() {
-          reject(new Error('Upload request timed out'));
-        };
-      });
-      
-      // Open and send the request
-      xhr.open('POST', ENDPOINTS.UPLOAD_RESUME, true);
-      xhr.timeout = 30000; // 30 second timeout
-      xhr.send(formData);
-      
-      // Wait for the upload to complete
-      const responseData = await uploadPromise;
-      
-      // Log successful upload
-      console.log('✅ Resume upload successful:', responseData);
-      
-      // Set upload as complete
-      setUploadProgress({ status: 'success', percent: 100 });
-      
-      // Notify parent component of successful upload with results
-      onUploadComplete(responseData);
-    } catch (error: any) {
-      console.error('❌ Resume upload failed:', error);
-      setUploadProgress({ status: 'error', percent: 0 });
-      
-      // Provide detailed error information
-      if (error.name === 'TimeoutError' || error.message.includes('timed out')) {
-        setError('Upload timed out. The server took too long to respond.');
-      } else if (error.message.includes('Network error')) {
-        setError('Network error during upload. Please check your connection and ensure the backend server is running.');
-      } else if (error.message.includes('status code')) {
-        setError(`Server error: ${error.message}`);
-      } else {
-        setError(`Upload failed: ${error.message}`);
-      }
-      
-      // Log additional debugging information
-      console.log('Current origin:', window.location.origin);
-      console.log('Target API:', ENDPOINTS.UPLOAD_RESUME);
-      console.log('Error details:', error);
-      
-      // Reset the form after error
-      resetForm();
-    }
-  }, [onUploadStart, onUploadComplete, resetForm]);
+  }, [setError, setFilePreview]);
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
@@ -266,7 +175,7 @@ const ResumeUploader = ({ onUploadStart, onUploadComplete }: ResumeUploaderProps
           animate={{ opacity: 1 }}
           transition={{ delay: 0.1 }}
         >
-          Upload Your Resume
+          AI Resume Screening
         </motion.h2>
         <motion.p 
           className="text-gray-600"
@@ -274,13 +183,31 @@ const ResumeUploader = ({ onUploadStart, onUploadComplete }: ResumeUploaderProps
           animate={{ opacity: 1 }}
           transition={{ delay: 0.2 }}
         >
-          We'll analyze your resume against job requirements
+          Enter job description and upload your resume for AI analysis
         </motion.p>
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.3 }}
-          className="mt-4"
+          className="mt-6 mb-8"
+        >
+          <label htmlFor="jobDescription" className="block text-left text-gray-700 font-medium mb-2">
+            Job Description
+          </label>
+          <textarea
+            id="jobDescription"
+            value={jobDescription}
+            onChange={(e) => setJobDescription(e.target.value)}
+            placeholder="Paste or type the job description here..."
+            className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 min-h-[150px] text-gray-700"
+            required
+          />
+        </motion.div>
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.4 }}
+          className="mt-4 mb-6"
         >
           <button
             onClick={(e) => {
@@ -307,6 +234,7 @@ const ResumeUploader = ({ onUploadStart, onUploadComplete }: ResumeUploaderProps
         whileHover={{ scale: 1.01 }}
         whileTap={{ scale: 0.99 }}
       >
+        <h3 className="text-lg font-semibold text-gray-700 mb-2">Upload Your Resume</h3>
         <div {...getRootProps()} className="w-full h-full">
           <input {...getInputProps()} />
           <input
@@ -488,13 +416,131 @@ const ResumeUploader = ({ onUploadStart, onUploadComplete }: ResumeUploaderProps
         </motion.div>
       )}
       
-      <motion.div 
-        className="mt-8 text-center text-gray-500 text-sm"
+      {/* Submit Button */}
+      <motion.div
+        className="mt-8"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.3 }}
       >
-        <p>Your resume will be analyzed using machine learning and NLP techniques</p>
+        <button
+          onClick={() => {
+            // Validate both job description and resume are provided
+            if (!jobDescription || jobDescription.trim().length < 10) {
+              setError('Please enter a detailed job description (at least 10 characters).');
+              return;
+            }
+            
+            if (!filePreview) {
+              setError('Please upload a resume file (PDF or DOCX).');
+              return;
+            }
+            
+            // If we have both job description and file preview, manually create a File object
+            // from the filePreview data and trigger the upload process
+            if (filePreview) {
+              // Log that we're starting the manual submission process
+              console.log('Starting manual submission with job description and file preview');
+              console.log('Job description length:', jobDescription.length);
+              console.log('File preview:', filePreview.name);
+              
+              // Find the file in the input element if it exists
+              let fileToUpload = null;
+              
+              if (fileInputRef.current && fileInputRef.current.files && fileInputRef.current.files.length > 0) {
+                fileToUpload = fileInputRef.current.files[0];
+                console.log('Found file in input element:', fileToUpload.name);
+              }
+              
+              if (fileToUpload) {
+                // Create a new FormData object
+                const formData = new FormData();
+                formData.append('file', fileToUpload);
+                formData.append('job_description', jobDescription);
+                
+                // Notify parent component that upload has started
+                onUploadStart();
+                
+                // Set upload in progress
+                setUploadProgress({ status: 'uploading', percent: 0 });
+                
+                // Use XMLHttpRequest for upload with progress tracking
+                const xhr = new XMLHttpRequest();
+                
+                // Setup progress tracking
+                xhr.upload.onprogress = (event) => {
+                  if (event.lengthComputable) {
+                    const percentCompleted = Math.round((event.loaded * 100) / event.total);
+                    console.log(`Upload progress: ${percentCompleted}%`);
+                    setUploadProgress({ status: 'uploading', percent: percentCompleted });
+                  }
+                };
+                
+                // Handle completion
+                xhr.onload = function() {
+                  if (xhr.status >= 200 && xhr.status < 300) {
+                    try {
+                      const data = JSON.parse(xhr.responseText);
+                      console.log('✅ Resume upload successful:', data);
+                      setUploadProgress({ status: 'success', percent: 100 });
+                      onUploadComplete(data);
+                    } catch (e) {
+                      console.error('Error parsing response:', e);
+                      setError('Invalid response from server');
+                      setUploadProgress({ status: 'error', percent: 0 });
+                    }
+                  } else {
+                    console.error(`Server responded with status code ${xhr.status}`);
+                    setError(`Server error: ${xhr.status}`);
+                    setUploadProgress({ status: 'error', percent: 0 });
+                  }
+                };
+                
+                // Handle errors
+                xhr.onerror = function() {
+                  console.error('Network error during upload');
+                  setError('Network error during upload');
+                  setUploadProgress({ status: 'error', percent: 0 });
+                };
+                
+                xhr.ontimeout = function() {
+                  console.error('Upload request timed out');
+                  setError('Upload timed out');
+                  setUploadProgress({ status: 'error', percent: 0 });
+                };
+                
+                // Open and send the request
+                xhr.open('POST', ENDPOINTS.UPLOAD_RESUME, true);
+                xhr.timeout = 30000; // 30 second timeout
+                xhr.send(formData);
+              } else {
+                setError('Could not find the file to upload. Please try selecting the file again.');
+              }
+            }
+          }}
+          disabled={uploadProgress.status === 'uploading'}
+          className={`w-full py-3 rounded-lg font-medium text-white ${
+            uploadProgress.status === 'uploading' 
+              ? 'bg-gray-400 cursor-not-allowed' 
+              : 'bg-gradient-to-r from-blue-600 to-indigo-700 hover:from-blue-700 hover:to-indigo-800 shadow-md hover:shadow-lg transition-all'
+          }`}
+        >
+          {uploadProgress.status === 'uploading' ? (
+            <span className="flex items-center justify-center">
+              <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+              </svg>
+              Processing...
+            </span>
+          ) : (
+            'Analyze Resume with AI'
+          )}
+        </button>
+        
+        <div className="text-center mt-4 text-gray-500 text-sm">
+          <p>Both job description and resume are required for analysis</p>
+        </div>
       </motion.div>
     </motion.div>
   );

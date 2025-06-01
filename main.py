@@ -1,4 +1,4 @@
-from fastapi import FastAPI, UploadFile, File, HTTPException
+from fastapi import FastAPI, UploadFile, File, Form, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 import os
 import shutil
@@ -36,7 +36,7 @@ async def health_check():
     return {"status": "ok", "message": "Server is running"}
 
 @app.post("/upload_resume/")
-async def upload_resume(file: UploadFile = File(...)):
+async def upload_resume(file: UploadFile = File(...), job_description: str = Form(...)):
     logging.info("🚀 API /upload_resume/ was called!")
     logging.info(f"📄 Received file: {file.filename}, content_type: {file.content_type}")
     
@@ -86,14 +86,11 @@ async def upload_resume(file: UploadFile = File(...)):
         resume_text = extract_resume_text(file_path)
         logging.info(f"📝 Extracted {len(resume_text)} characters from resume")
         
-        # Load job description from file
-        try:
-            with open("sample_job.txt", "r") as f:
-                job_description = f.read()
-            logging.info(f"📝 Loaded job description: {job_description[:50]}...")
-        except Exception as e:
-            logging.error(f"❌ ERROR READING JOB DESCRIPTION FILE: {str(e)}")
-            raise HTTPException(status_code=500, detail=f"Failed to load job description: {str(e)}")
+        # Use job description from request
+        logging.info(f"📝 Received job description: {job_description[:50]}...")
+        if not job_description or len(job_description.strip()) < 10:
+            logging.error("❌ Job description is too short or empty")
+            raise HTTPException(status_code=400, detail="Job description is too short or empty. Please provide a detailed job description.")
         
         # Calculate match scores and other outputs
         logging.info("🧮 Calculating similarity...")

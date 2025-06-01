@@ -22,12 +22,20 @@ def preprocess_text(text):
     return cleaned_text
 
 def calculate_similarity(resume_text, job_description):
-    """Use BERT embeddings for better similarity scoring."""
+    """Use BERT embeddings for better similarity scoring.
+    Returns a normalized score between 0 and 100."""
     resume_embedding = bert_model.encode(resume_text, convert_to_tensor=True)
     job_embedding = bert_model.encode(job_description, convert_to_tensor=True)
 
+    # Get cosine similarity (value between -1 and 1)
     similarity_score = util.pytorch_cos_sim(resume_embedding, job_embedding)[0][0].item()
-    return similarity_score * 100  # Convert to percentage
+    
+    # Normalize to 0-1 range (cosine similarity can be between -1 and 1)
+    # For text similarity, values are typically between 0 and 1, but we'll handle negative values just in case
+    normalized_score = max(0, min(similarity_score, 1))
+    
+    # Convert to percentage (0-100 range)
+    return normalized_score * 100
 
 
 def match_skills(resume_text, job_description):

@@ -16,9 +16,10 @@ interface ResultsDisplayProps {
 
 const ResultsDisplay = ({ results, onReset }: ResultsDisplayProps) => {
   // Format scores as percentages
-  const matchScore = Math.round(results.match_score * 100);
-  const skillMatchScore = Math.round(results.skill_match_score * 100);
-  const confidenceScore = Math.round(results.bert_classification.confidence * 100);
+  // Backend now returns match_score and skill_match_score already in 0-100 range
+  const matchScore = Math.round(results.match_score);
+  const skillMatchScore = Math.round(results.skill_match_score);
+  const confidenceScore = Math.round(results.bert_classification.confidence * 100); // This still needs multiplication
   
   // Determine color based on score
   const getScoreColor = (score: number) => {
