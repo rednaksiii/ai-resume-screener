@@ -1,174 +1,158 @@
-### **📄 AI-Powered Resume Screener**  
+# 🔍 AI Resume Screener
 
-🚀 **An AI-driven resume screening system** built with **FastAPI** that uses **Machine Learning, NLP, and BERT embeddings** to evaluate candidate resumes against job descriptions.  
+[![Netlify Status](https://api.netlify.com/api/v1/badges/your-deploy-id/deploy-status)](https://app.netlify.com/sites/ai-resume-screener/deploys)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
----
+A modern, **AI-powered resume screening tool** that instantly analyzes how well a resume matches a job description using NLP, BERT, and machine learning — all wrapped in a beautiful animated UI.
 
-## **📌 Features**  
-✅ **Upload Resumes** (PDF/DOCX) via API  
-✅ **Extracts Resume Text** using `pdfplumber` & `python-docx`  
-✅ **Matches Resume with Job Descriptions** (TF-IDF & BERT embeddings)  
-✅ **Skill Matching & Suitability Prediction** using **XGBoost**  
-✅ **BERT-based Text Classification** for job relevance  
-✅ **Stores Resumes in `uploads/` Folder**  
+> 🎯 **Paste a job description → Upload your resume → Get instant, visual feedback on your fit.**
 
 ---
 
-## **🚀 How It Works**
-1️⃣ **User uploads a resume** via **Swagger UI** or API (`/upload_resume/`)  
-2️⃣ **Text is extracted** using `pdfplumber` (PDF) or `python-docx` (DOCX)  
-3️⃣ **Job matching system** calculates:  
-   - **Text similarity** (TF-IDF + Cosine Similarity)  
-   - **Skill match percentage**  
-4️⃣ **ML Prediction (XGBoost)** classifies the candidate as **"Suitable" or "Not Suitable"**  
-5️⃣ **BERT Classification** determines job relevance (`"Relevant"` or `"Not Relevant"`)  
-6️⃣ **API returns a JSON response** with all results  
+## ✨ Key Features
+
+### 🔬 AI & NLP Analysis
+
+* 💡 **Job Description Input** — Type or paste directly in the UI
+* 📄 **Resume Upload** — Supports `.pdf` and `.docx`
+* 🔍 **Text Extraction** — Accurate parsing of complex resumes
+* 📊 **Match Score** — TF-IDF + Cosine similarity (0–100%)
+* 🎯 **Skill Match %** — Compares required vs. detected skills
+* 🤖 **XGBoost Prediction** — "Suitable" or "Not Suitable"
+* 🧠 **BERT Relevance** — Classifies resumes with confidence score
+
+### 💻 Frontend Experience
+
+* 🎨 **Clean, responsive design** — Mobile-first and desktop-friendly
+* ⚡ **Framer Motion animations** — For a modern, polished feel
+* 📥 **Drag & drop upload** — With validation & loading indicators
+* 📈 **Visual result dashboard** — Real-time, animated feedback
 
 ---
 
-## **📡 API Endpoints**
-### **1️⃣ Upload Resume**
-#### **`POST /upload_resume/`**
-- **Uploads a resume & evaluates candidate suitability**  
-- **Body**: `multipart/form-data`
-- **File Type**: `.pdf` or `.docx`
-- **Response:**
-```json
-{
-  "match_score": 85.4,
-  "skill_match_score": 90,
-  "matched_skills": ["Python", "Machine Learning", "Deep Learning"],
-  "prediction": "Suitable",
-  "bert_classification": {
-    "label": "Relevant",
-    "score": 0.92
-  },
-  "file_saved_at": "uploads/resume.pdf"
-}
+## 🚀 [Live Demo](https://ai-resume-screener.windsurf.build)
+
+> ✅ Paste job description
+> ✅ Upload resume
+> ✅ View results — instantly
+
+---
+
+## 🛠 Tech Stack
+
+### 🔧 Frontend
+
+* **React** (with Vite)
+* **Tailwind CSS**
+* **Framer Motion** for animations
+* **React Dropzone** for uploads
+
+### 🧪 Backend
+
+* **FastAPI** (Python)
+* **pdfplumber**, **python-docx** for parsing
+* **spaCy**, **transformers**, **sentence-transformers**
+* **scikit-learn**, **XGBoost**, **pandas**
+
+---
+
+## 📁 Project Structure
+
+```
+ai-resume-screener/
+├── backend/
+│   ├── main.py            # FastAPI routes
+│   ├── job_matcher.py     # TF-IDF & skill matching
+│   ├── ml_model.py        # XGBoost prediction logic
+│   ├── resume_parser.py   # Text extraction
+│   └── requirements.txt   # Python dependencies
+│
+├── frontend/
+│   ├── src/
+│   │   ├── components/     # React components
+│   │   ├── App.tsx         # Main component
+│   │   └── ...             # Other files
+│   ├── public/             # Static assets
+│   └── package.json
+└── uploads/                # Uploaded resumes
 ```
 
 ---
 
-## **🛠️ Installation & Setup**
-### **1️⃣ Clone the Repository**
+## ⚙️ Local Setup
+
+### 🧠 Backend (FastAPI)
+
 ```bash
 git clone https://github.com/your-username/ai-resume-screener.git
-cd ai-resume-screener
-```
+cd ai-resume-screener/backend
 
-### **2️⃣ Create a Virtual Environment**
-```bash
 python -m venv venv
-```
-```bash
-# Windows
-venv\Scripts\activate
+source venv/bin/activate  # Windows: venv\Scripts\activate
 
-# macOS/Linux
-source venv/bin/activate
-```
-
-### **3️⃣ Install Dependencies**
-```bash
 pip install -r requirements.txt
-```
-
-### **4️⃣ Download spaCy & BERT Models**
-```bash
 python -m spacy download en_core_web_sm
+
+uvicorn main:app --reload
 ```
 
-### **5️⃣ Run FastAPI Server**
+Backend runs at: `http://localhost:8000`
+
+---
+
+### 💻 Frontend (React + Vite)
+
 ```bash
-python -m uvicorn main:app --reload
+cd ../frontend
+npm install
+npm run dev
 ```
-Server will run at **[http://127.0.0.1:8000](http://127.0.0.1:8000)**
 
-### **6️⃣ Access Swagger UI**
-Go to **[http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs)** to test the API.
-
----
-
-## **📂 Project Structure**
-```
-📦 ai-resume-screener
- ┣ 📂 uploads/                # Folder where uploaded resumes are stored
- ┣ 📜 main.py                 # FastAPI application
- ┣ 📜 resume_parser.py        # Extracts text from resumes
- ┣ 📜 job_matcher.py          # Job matching & skill extraction
- ┣ 📜 ml_model.py             # XGBoost-based suitability prediction
- ┣ 📜 sample_job.txt          # Example job description
- ┣ 📜 requirements.txt        # Required dependencies
- ┣ 📜 README.md               # Project documentation
-```
+Frontend runs at: `http://localhost:5173`
 
 ---
 
-## **📦 Dependencies (`requirements.txt`)**
-This project requires the following packages:
-```
-fastapi
-uvicorn
-pdfplumber
-python-docx
-scikit-learn
-xgboost
-numpy
-streamlit
-spacy
-transformers
-sentence-transformers
-torch
-torchvision
-torchaudio
-pandas
-joblib
-```
-To install them, run:
+## 📸 Screenshots
+
+| Job Description Input        | Resume Upload               | Match Results                |
+| ---------------------------- | --------------------------- | ---------------------------- |
+| ![](screenshots/jobdesc.png) | ![](screenshots/upload.png) | ![](screenshots/results.png) |
+
+---
+
+## 📈 What’s Next?
+
+* [ ] 🔐 User profiles & login
+* [ ] 💾 Resume history tracking
+* [ ] 📊 Compare against multiple job descriptions
+* [ ] 📋 Resume improvement tips
+* [ ] 📥 Export analysis as PDF report
+
+---
+
+## 🤝 How to Contribute
+
 ```bash
-pip install -r requirements.txt
-```
-Then download the **spaCy model**:
-```bash
-python -m spacy download en_core_web_sm
+# Fork the repository
+# Create a branch: git checkout -b feature/my-feature
+# Commit your changes: git commit -m 'Add new feature'
+# Push: git push origin feature/my-feature
+# Open a Pull Request 🚀
 ```
 
 ---
 
-## 📊 **Response Explanation**
+## 📄 License
 
-When a resume is uploaded, the API returns a JSON object like this:
-
-```json
-{
-  "match_score": 44.63,
-  "skill_match_score": 50,
-  "matched_skills": ["Python", "Machine Learning"],
-  "prediction": "Suitable",
-  "bert_classification": {
-    "label": "Relevant",
-    "score": 0.569
-  },
-  "file_saved_at": "uploads/SophiaMartinezDataScienceResume.pdf"
-}
-```
-
-### 🔍 What Each Field Means:
-
-| Field | Description |
-|-------|-------------|
-| `match_score` | **Textual similarity** between the resume and job description, calculated using **TF-IDF + cosine similarity** (scale: 0–100). |
-| `skill_match_score` | The **percentage of required job skills** that were found in the resume. |
-| `matched_skills` | A list of actual **skills detected** in the resume that overlap with the job description. |
-| `prediction` | Output from the **XGBoost ML model** that predicts whether the candidate is **“Suitable” or “Not Suitable”** based on features like match score and (placeholder) experience. |
-| `bert_classification.label` | Classification result from a **BERT-based model**, determining whether the resume text is **“Relevant” or “Not Relevant”** to the job context. |
-| `bert_classification.score` | The **confidence score** (from 0 to 1) of the BERT model’s classification. |
-| `file_saved_at` | The full **path to the saved resume** in the local `uploads/` folder, useful for reviewing or referencing later. |
+MIT License — See [`LICENSE`](LICENSE) for full details.
 
 ---
 
-## **🔮 Next Steps**
-✅ **Create UX/UI** - Modern React frontend with animations  
-🔲 **Optimize BERT Model with More Data**  
-🔲 **Deploy API Online (Railway, Render, or AWS)**  
-🔲 **Sorting Resumes by Score** 
+## 🙏 Acknowledgments
+
+Built with ❤️ to help job seekers understand their fit — instantly.
+Thanks to open-source tools and frameworks that made this project possible.
+
+---
+
+Let me know if you'd like this in a downloadable `README.md` file or need custom branding/logos added.
