@@ -153,6 +153,3 @@ MIT License — See [`LICENSE`](LICENSE) for full details.
 Built with ❤️ to help job seekers understand their fit — instantly.
 Thanks to open-source tools and frameworks that made this project possible.
 
----
-
-Let me know if you'd like this in a downloadable `README.md` file or need custom branding/logos added.
