@@ -23,12 +23,42 @@ def extract_text_from_docx(docx_path):
 
 def extract_resume_text(file_path):
     """Detect file type and extract text accordingly."""
-    if file_path.endswith(".pdf"):
-        return extract_text_from_pdf(file_path)
-    elif file_path.endswith(".docx"):
-        return extract_text_from_docx(file_path)
-    else:
-        raise ValueError("Unsupported file format. Use PDF or DOCX.")
+    import os
+    import logging
+    
+    logging.info(f"Attempting to extract text from: {file_path}")
+    
+    # Check if file exists
+    if not os.path.exists(file_path):
+        logging.error(f"File does not exist: {file_path}")
+        raise FileNotFoundError(f"File not found: {file_path}")
+    
+    # Check file size
+    file_size = os.path.getsize(file_path)
+    logging.info(f"File size: {file_size} bytes")
+    if file_size == 0:
+        logging.error(f"File is empty: {file_path}")
+        raise ValueError(f"Empty file: {file_path}")
+    
+    # Extract text based on file extension
+    try:
+        if file_path.lower().endswith(".pdf"):
+            logging.info("Detected PDF file, extracting text...")
+            text = extract_text_from_pdf(file_path)
+        elif file_path.lower().endswith(".docx"):
+            logging.info("Detected DOCX file, extracting text...")
+            text = extract_text_from_docx(file_path)
+        else:
+            logging.error(f"Unsupported file format: {file_path}")
+            raise ValueError(f"Unsupported file format: {os.path.splitext(file_path)[1]}. Use PDF or DOCX.")
+        
+        logging.info(f"Successfully extracted {len(text)} characters of text")
+        return text
+    except Exception as e:
+        logging.error(f"Error extracting text from {file_path}: {str(e)}")
+        import traceback
+        logging.error(traceback.format_exc())
+        raise
 
 def extract_name(text):
     """Extract the candidate's name from the resume text using spaCy."""
