@@ -1,11 +1,36 @@
+<div align="center">
+
 # 🔍 AI Resume Screener
 
-[![Netlify Status](https://api.netlify.com/api/v1/badges/your-deploy-id/deploy-status)](https://app.netlify.com/sites/ai-resume-screener/deploys)
+[![FastAPI](https://img.shields.io/badge/FastAPI-005571?style=for-the-badge&logo=fastapi)](https://fastapi.tiangolo.com/)
+[![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)](https://reactjs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![TailwindCSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
+[![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
+[![scikit-learn](https://img.shields.io/badge/scikit--learn-F7931E?style=for-the-badge&logo=scikit-learn&logoColor=white)](https://scikit-learn.org/)
+[![Vite](https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white)](https://vitejs.dev/)
+
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Netlify Status](https://api.netlify.com/api/v1/badges/your-deploy-id/deploy-status)](https://app.netlify.com/sites/ai-resume-screener/deploys)
 
-A modern, **AI-powered resume screening tool** that instantly analyzes how well a resume matches a job description using NLP, BERT, and machine learning — all wrapped in a beautiful animated UI.
+A modern, **AI-powered resume screening tool** that instantly analyzes how well a resume matches a job description using state-of-the-art NLP, BERT embeddings, and machine learning — all wrapped in a beautiful, responsive UI.
 
-> 🎯 **Paste a job description → Upload your resume → Get instant, visual feedback on your fit.**
+[Live Demo](https://ai-resume-screener.windsurf.build) • [Report Bug](https://github.com/your-username/ai-resume-screener/issues) • [Request Feature](https://github.com/your-username/ai-resume-screener/issues)
+
+</div>
+
+## ✨ Features
+
+<div align="center">
+  <img src="screenshots/input.png" alt="Job Description Input" width="800"/>
+</div>
+
+### 🤖 AI & Machine Learning
+- **BERT Embeddings** for semantic text understanding
+- **XGBoost Model** for candidate suitability prediction
+- **TF-IDF & Cosine Similarity** for precise matching
+- **spaCy NLP** for advanced text processing
+- **Scikit-learn** for ML pipeline management
 
 ---
 
@@ -21,12 +46,17 @@ A modern, **AI-powered resume screening tool** that instantly analyzes how well 
 * 🤖 **XGBoost Prediction** — "Suitable" or "Not Suitable"
 * 🧠 **BERT Relevance** — Classifies resumes with confidence score
 
-### 💻 Frontend Experience
+### 💻 Modern Frontend
 
-* 🎨 **Clean, responsive design** — Mobile-first and desktop-friendly
-* ⚡ **Framer Motion animations** — For a modern, polished feel
-* 📥 **Drag & drop upload** — With validation & loading indicators
-* 📈 **Visual result dashboard** — Real-time, animated feedback
+<div align="center">
+  <img src="screenshots/analysis.png" alt="Analysis Results" width="800"/>
+</div>
+
+* 🎨 **React + TypeScript** - For robust, type-safe components
+* 🌈 **TailwindCSS + Framer Motion** - Beautiful, fluid animations
+* ⚡ **Vite** - Lightning-fast build tooling
+* 📥 **React Dropzone** - Drag & drop file uploads
+* 📊 **Dynamic Charts** - Real-time data visualization
 
 ---
 
@@ -38,21 +68,52 @@ A modern, **AI-powered resume screening tool** that instantly analyzes how well 
 
 ---
 
-## 🛠 Tech Stack
+## 📈 Analysis Results
 
-### 🔧 Frontend
+<div align="center">
+  <img src="screenshots/results.png" alt="Match Results" width="800"/>
+</div>
 
-* **React** (with Vite)
-* **Tailwind CSS**
-* **Framer Motion** for animations
-* **React Dropzone** for uploads
+The AI-powered analysis provides comprehensive insights:
 
-### 🧪 Backend
+* 🎯 **Overall Match Score** - TF-IDF based semantic similarity
+* 📉 **Skill Match Score** - Required vs detected skills comparison
+* 🤖 **ML Prediction** - XGBoost-powered suitability analysis
+* 🧠 **BERT Classification** - Deep learning relevance scoring
+* 📊 **Visual Analytics** - Clear, actionable insights
 
-* **FastAPI** (Python)
-* **pdfplumber**, **python-docx** for parsing
-* **spaCy**, **transformers**, **sentence-transformers**
-* **scikit-learn**, **XGBoost**, **pandas**
+## 📚 Project Architecture
+
+```mermaid
+graph TD
+    A[Frontend - React + TypeScript] --API Calls--> B[FastAPI Backend]
+    B --> C[Resume Parser]
+    B --> D[Job Matcher]
+    B --> E[ML Model]
+    C --> F[Text Extraction]
+    D --> G[TF-IDF Vectorizer]
+    D --> H[Skill Matcher]
+    E --> I[XGBoost Model]
+    E --> J[BERT Classifier]
+    style A fill:#61DAFB,stroke:#333,stroke-width:2px
+    style B fill:#009688,stroke:#333,stroke-width:2px
+    style E fill:#F7931E,stroke:#333,stroke-width:2px
+    style J fill:#FFC107,stroke:#333,stroke-width:2px
+```
+
+### 🎯 Core Technologies
+
+🔍 **Frontend Stack**
+- React 18 with TypeScript
+- TailwindCSS for styling
+- Framer Motion animations
+- Vite for development
+
+🔧 **Backend Stack**
+- FastAPI for high-performance API
+- Scikit-learn for ML pipeline
+- BERT for deep learning
+- spaCy for NLP tasks
 
 ---
 
