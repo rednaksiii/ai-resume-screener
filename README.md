@@ -11,11 +11,8 @@
 [![Vite](https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white)](https://vitejs.dev/)
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Netlify Status](https://api.netlify.com/api/v1/badges/your-deploy-id/deploy-status)](https://app.netlify.com/sites/ai-resume-screener/deploys)
 
 A modern, **AI-powered resume screening tool** that instantly analyzes how well a resume matches a job description using state-of-the-art NLP, BERT embeddings, and machine learning — all wrapped in a beautiful, responsive UI.
-
-[Live Demo](https://ai-resume-screener.windsurf.build) • [Report Bug](https://github.com/your-username/ai-resume-screener/issues) • [Request Feature](https://github.com/your-username/ai-resume-screener/issues)
 
 </div>
 
@@ -57,16 +54,6 @@ A modern, **AI-powered resume screening tool** that instantly analyzes how well 
 * ⚡ **Vite** - Lightning-fast build tooling
 * 📥 **React Dropzone** - Drag & drop file uploads
 * 📊 **Dynamic Charts** - Real-time data visualization
-
----
-
-## 🚀 [Live Demo](https://ai-resume-screener.windsurf.build)
-
-> ✅ Paste job description
-> ✅ Upload resume
-> ✅ View results — instantly
-
----
 
 ## 📈 Analysis Results
 
@@ -167,16 +154,6 @@ npm run dev
 
 Frontend runs at: `http://localhost:5173`
 
----
-
-## 📸 Screenshots
-
-| Job Description Input        | Resume Upload               | Match Results                |
-| ---------------------------- | --------------------------- | ---------------------------- |
-| ![](screenshots/jobdesc.png) | ![](screenshots/upload.png) | ![](screenshots/results.png) |
-
----
-
 ## 📈 What’s Next?
 
 * [ ] 🔐 User profiles & login
@@ -187,26 +164,13 @@ Frontend runs at: `http://localhost:5173`
 
 ---
 
-## 🤝 How to Contribute
-
-```bash
-# Fork the repository
-# Create a branch: git checkout -b feature/my-feature
-# Commit your changes: git commit -m 'Add new feature'
-# Push: git push origin feature/my-feature
-# Open a Pull Request 🚀
-```
-
----
-
 ## 📄 License
 
 MIT License — See [`LICENSE`](LICENSE) for full details.
 
 ---
 
-## 🙏 Acknowledgments
+## ✊ Acknowledgments
 
-Built with ❤️ to help job seekers understand their fit — instantly.
-Thanks to open-source tools and frameworks that made this project possible.
-
+Created to support job seekers around the world with smarter tools.
+Special thanks to the open-source community for laying the foundation.
