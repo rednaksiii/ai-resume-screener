@@ -22,7 +22,11 @@ A modern, **AI-powered resume screening tool** that instantly analyzes how well 
 ## ✨ Features
 
 <div align="center">
-  <img src="screenshots/input.png" alt="Job Description Input" width="800"/>
+
+| Job Description Input | Resume Upload | Match Results |
+|:---:|:---:|:---:|
+| ![Job Input](screenshots/jobdesc.png) | ![Upload](screenshots/upload.png) | ![Results](screenshots/results.png) |
+
 </div>
 
 ### 🤖 AI & Machine Learning
@@ -48,10 +52,6 @@ A modern, **AI-powered resume screening tool** that instantly analyzes how well 
 
 ### 💻 Modern Frontend
 
-<div align="center">
-  <img src="screenshots/analysis.png" alt="Analysis Results" width="800"/>
-</div>
-
 * 🎨 **React + TypeScript** - For robust, type-safe components
 * 🌈 **TailwindCSS + Framer Motion** - Beautiful, fluid animations
 * ⚡ **Vite** - Lightning-fast build tooling
@@ -69,10 +69,6 @@ A modern, **AI-powered resume screening tool** that instantly analyzes how well 
 ---
 
 ## 📈 Analysis Results
-
-<div align="center">
-  <img src="screenshots/results.png" alt="Match Results" width="800"/>
-</div>
 
 The AI-powered analysis provides comprehensive insights:
 
